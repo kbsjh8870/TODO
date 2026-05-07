@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <nav class="navbar">
+        <span class="nav-title">My TodoList</span>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link ">할일</a>
+            <a href="user.html" class="nav-link active">유저</a>
+            <a href="category.html" class="nav-link">카테고리</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="form-section">
+            <input type="text" placeholder="이름">
+            <button class="btn-icon add">등록</button>
+        </section>
+
+        <section class="table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>수정</th>
+                        <th>삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                         <td>1</td>
+                        <td>홍길동</td>
+                        <td><button class="btn-icon edit">수정</button></td>
+                        <td><button class="btn-icon delete">삭제</button></td>
+                    </tr>
+                     <tr>
+                        <td>2</td>
+                        <td>김철수</td>
+                        <td><button class="btn-icon edit">수정</button></td>
+                        <td><button class="btn-icon delete">삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>ex</td>
+                        <td><button class="btn-icon edit">수정</button></td>
+                        <td><button class="btn-icon delete">삭제</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

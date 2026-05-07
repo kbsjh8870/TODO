@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <span class="nav-title">My TodoList</span>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active">할일</a>
+            <a href="user.html" class="nav-link">유저</a>
+            <a href="category.html" class="nav-link">카테고리</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="dashboard-wrapper">
+            <section class="progress-section">
+                <p>현재까지 진행률</p>
+            </section>
+
+            <div class="side-panel">
+                <button class="btn btn-add">할일 추가</button>
+                <button class="btn btn-edit">수정</button>
+                <button class="btn btn-delete">삭제</button>
+                <div class="chart-placeholder">
+                    <!-- 파이차트 -->
+                    <p>파이 차트?</p>
+                </div>
+            </div>
+        </div>
+        <section class="status-section">
+            <p>할일 현황</p>
+            <div class="card-wrapper">
+                <div class="card card-all">
+                    <div class="card-inner">
+                        <div class="card-left">
+                            <p>전체 할일</p>
+                            <span class="count">0</span>
+                            <span class="badge badge-all">대기 중</span>
+                        </div>
+                        <div class="card-right">
+                            <span>등록 최신순1</span>
+                            <span>등록 최신순2</span>
+                            <span>등록 최신순3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-done">
+                    <div class="card-inner">
+                        <div class="card-left">
+                            <p>완료</p>
+                            <span class="count">0</span>
+                            <span class="badge badge-done">완료됨</span>
+                        </div>
+                        <div class="card-right">
+                            <span>완료 최신순1</span>
+                            <span>완료 최신순2</span>
+                            <span>완료 최신순3</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card card-undone">
+                    <div class="card-inner">
+                        <div class="card-left">
+                            <p>미완료</p>
+                            <span class="count">0</span>
+                            <span class="badge badge-undone">진행 중</span>
+                        </div>
+                        <div class="card-right">
+                            <span>등록 오래된순1</span>
+                            <span>등록 오래된순2</span>
+                            <span>등록 오래된순3</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

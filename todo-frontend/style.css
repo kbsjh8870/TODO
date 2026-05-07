@@ -1,0 +1,276 @@
+* {
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+body {
+    font-size: 28px;
+    background-color: #f5f5f0;
+}
+
+p{
+    margin-top: 3px;
+    margin-bottom: 0px;
+}
+
+/* 네비게이션 ================================================================================================*/
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background-color: #ffffff;
+    border-bottom: 2px solid #d0d0c8;
+    margin-bottom: 30px;
+}
+
+.nav-title {
+    font-size: 30px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    font-size: 20px;
+    text-decoration: none;
+    color: #aaa;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.nav-link.active {
+    color: #3d3d3d;
+    border-bottom: 3px solid #81c784;
+}
+
+/* 컨테이너 ================================================================================================*/
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 상단 대시보드 ================================================================================================*/
+.dashboard-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.progress-section {
+    width: 70%;
+    border-radius: 20px;
+    height: 300px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 4px solid #d0d0c8;
+}
+
+.side-panel {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 할일 추가,수정,삭제 버튼 ================================================================================================*/
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.btn-add {
+    background-color: #c8e6c9;
+}
+
+.btn-edit {
+    background-color: #e8eaf6;
+}
+
+.btn-delete {
+    background-color: #fce4ec;
+}
+
+/* 차트 ================================================================================================*/
+.chart-placeholder {
+    flex: 1;
+    border: 4px solid #d0d0c8;
+    border-radius: 20px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+}
+
+/* 할일 현황 ================================================================================================*/
+.status-section {
+    border-radius: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 4px solid #d0d0c8;
+}
+
+.card-wrapper {
+    margin-top: 10px;
+}
+
+.card {
+    min-height: 150px;
+    border-radius: 20px;
+    padding: 15px 5px 5px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-all {
+    background-color: #e8eaf6;
+    border: 3px solid #c5cae9;
+}
+
+.card-done {
+    background-color: #e8f5e9;
+    border: 3px solid #c8e6c9;
+}
+
+.card-undone {
+    background-color: #fce4ec;
+    border: 3px solid #ffe0b2;
+}
+
+.card-inner {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-left {
+    width: 25%;
+}
+
+.card-right {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding-right: 15px;
+    margin-right: 10px;
+    font-size: 30px;
+    color: #555;
+}
+
+.count {
+    display: block;
+    font-size: 60px;
+}
+
+.badge {
+    display: block;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 3px 10px;
+    width: fit-content;
+}
+
+.badge-all {
+    background-color: #9fa8da;
+    color: #ffffff;
+}
+
+.badge-done {
+    background-color: #81c784;
+    color: #ffffff;
+}
+
+.badge-undone {
+    background-color: #ffb74d;
+    color: #ffffff;
+}
+
+/*유저 등록 폼 ================================================================================================*/
+.form-section {
+    background-color: #ffffff;
+    border: 4px solid #d0d0c8;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-section input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #d0d0c8;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: 'Do Hyeon', sans-serif;
+    outline: none;
+}
+
+.table-section {
+    background-color: #ffffff;
+    border: 4px solid #d0d0c8;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 4px solid #d0d0c8;
+}
+
+thead {
+    background-color: #f5f5f0;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid #d0d0c8;
+    font-size: 20px;
+}
+
+th {
+    font-size: 18px;
+    color: #aaa;
+}
+
+
+/* 유저 등록,수정,삭제 버튼 ================================================================================================*/
+.btn-icon {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Do Hyeon', sans-serif;
+    cursor: pointer;
+}
+
+.btn-icon.edit {
+    background-color: #e8eaf6;
+}
+
+.btn-icon.delete {
+    background-color: #fce4ec;
+}
+
+.btn-icon.add{
+    background-color: #c8e6c9;
+}
+
