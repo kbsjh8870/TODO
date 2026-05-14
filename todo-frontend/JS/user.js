@@ -13,11 +13,31 @@ function renderUsers() {
   users.forEach((user) => {
     const tr = document.createElement("tr");
 
-    tr.innerHTML = `
+    /* tr.innerHTML = `
     <td>${user.id}</td>
     <td>${user.name}</td>
     <td><button class="btn-icon edit">수정</button></td>
-    <td><button class="btn-icon delete">삭제</button></td>`;
+    <td><button class="btn-icon delete">삭제</button></td>`; */
+
+    const tdId = document.createElement("td");
+    tdId.textContent = user.id;
+
+    const tdName = document.createElement("td");
+    tdName.textContent = user.name;
+
+    const tdEdit = document.createElement("td");
+    const editBtn = document.createElement("button");
+    editBtn.className = "btn-icon edit";
+    editBtn.textContent = "수정";
+    tdEdit.appendChild(editBtn);
+
+    const toDelete = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn-icon delete";
+    deleteBtn.textContent = "삭제";
+    toDelete.appendChild(deleteBtn);
+
+    tr.append(tdId, tdName, tdEdit, toDelete);
 
     // 유저 삭제
     tr.querySelector(".btn-icon.delete").addEventListener("click", (e) => {

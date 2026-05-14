@@ -6,6 +6,14 @@ let todos = [
 ];
 let nextId = todos.length + 1;
 
+let categories = [
+  { id: 1, category: "업무" },
+  { id: 2, category: "개인" },
+  { id: 3, category: "공부" },
+  { id: 4, category: "약속" },
+  { id: 5, category: "기타" },
+];
+
 // 할일 현황 카운트 렌더링
 function renderCount() {
   const all = todos.length;
@@ -47,3 +55,103 @@ function renderCardList() {
 }
 
 renderCardList();
+
+// 닫기 버튼
+document.querySelectorAll(".modal-close").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".modal-overlay").forEach((modal) => {
+      modal.style.display = "none";
+      document.getElementById("todo-input").value = "";
+    });
+  });
+});
+
+// 오버레이 클릭시 닫기
+document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.style.display = "none";
+      document.getElementById("todo-input").value = "";
+    }
+  });
+});
+
+// 카드 클릭 이벤트
+document.querySelector(".card-all").addEventListener("click", () => {
+  document.querySelector(".modal-title").textContent = "전체 할일";
+  document.getElementById("list-modal").style.display = "flex";
+  renderTodoList("all");
+});
+document.querySelector(".card-done").addEventListener("click", () => {
+  document.querySelector(".modal-title").textContent = "완료";
+  document.getElementById("list-modal").style.display = "flex";
+  renderTodoList("done");
+});
+document.querySelector(".card-undone").addEventListener("click", () => {
+  document.querySelector(".modal-title").textContent = "미완료";
+  document.getElementById("list-modal").style.display = "flex";
+  renderTodoList("undone");
+});
+
+// 할일 추가 버튼
+document.querySelector(".btn-add").addEventListener("click", () => {
+  document.getElementById("add-modal").style.display = "flex";
+});
+
+// todo list 렌더링
+function renderTodoList(filter) {
+  let filtered;
+
+  if (filter === "all") filtered = todos;
+  else if (filter === "done") filtered = todos.filter((t) => t.isDone);
+  else if (filter === "undone") filtered = todos.filter((t) => !t.isDone);
+
+  const tbody = document.getElementById("todo-tbody");
+  tbody.innerHTML = "";
+
+  filtered.forEach((todo) => {
+    const tr = document.createElement("tr");
+
+    const tdId = document.createElement("td");
+    tdId.textContent = todo.id;
+
+    const tdContent = document.createElement("td");
+    tdContent.textContent = todo.content;
+
+    const tdCategory = document.createElement("td");
+    tdCategory.textContent = todo.categoryId;
+
+    const tdDone = document.createElement("td");
+    tdDone.textContent = todo.isDone ? "☑" : "☐";
+
+    const tdEdit = document.createElement("td");
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "수정";
+    editBtn.className = "btn-icon edit";
+    tdEdit.appendChild(editBtn);
+
+    const tdDelete = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "삭제";
+    deleteBtn.className = "btn-icon delete";
+    tdDelete.appendChild(deleteBtn);
+
+    tr.append(tdId, tdContent, tdCategory, tdDone, tdEdit, tdDelete);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function renderCategorySelect() {
+  const select = document.getElementById("category-select");
+
+  categories.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.textContent = category.category;
+
+    select.appendChild(option);
+  });
+}
+
+renderCategorySelect();

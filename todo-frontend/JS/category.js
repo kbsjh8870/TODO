@@ -13,11 +13,19 @@ function renderCategories() {
 
   categories.forEach((cat) => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-            <td>${cat.id}</td>
-            <td>${cat.category}</td>
-            <td><button class="btn-icon delete">삭제</button></td>
-        `;
+
+    const tdId = document.createElement("td");
+    tdId.textContent = cat.id;
+    const tdCat = document.createElement("td");
+    tdCat.textContent = cat.category;
+
+    const tdDelete = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "btn-icon delete";
+    deleteBtn.textContent = "삭제";
+    tdDelete.appendChild(deleteBtn);
+
+    tr.append(tdId, tdCat, tdDelete);
 
     tr.querySelector(".btn-icon.delete").addEventListener("click", () => {
       categories = categories.filter((c) => c.id !== cat.id);

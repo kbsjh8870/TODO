@@ -29,8 +29,8 @@
 
             <div class="side-panel">
                 <button class="btn btn-add">할일 추가</button>
-                <button class="btn btn-edit">수정</button>
-                <button class="btn btn-delete">삭제</button>
+                <!-- <button class="btn btn-edit">수정</button>
+                <button class="btn btn-delete">삭제</button> -->
                 <div class="chart-placeholder">
                     <!-- 파이차트 -->
                     <p>파이 차트?</p>
@@ -82,6 +82,47 @@
                 </div>
             </div>
         </section>
+    </div>
+    <!-- 할일 목록 모달 -->
+    <div class="modal-overlay" id="list-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">전체 할일</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>내용</th>
+                            <th>카테고리</th>
+                            <th>완료</th>
+                            <th>수정</th>
+                            <th>삭제</th>
+                        </tr>
+                    </thead>
+                    <tbody id="todo-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 할일 추가 모달 -->
+    <div class="modal-overlay" id="add-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">할일 추가</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="todo-input" placeholder="할일 내용" class="todo-add-modal-input">
+                <select id="category-select">
+                    <option value="">카테고리 선택</option>
+                </select>
+                <button class="btn btn-add-confirm">등록</button>
+            </div>
+        </div>
     </div>
     <script src="JS/todo.js"></script>
 </body>
