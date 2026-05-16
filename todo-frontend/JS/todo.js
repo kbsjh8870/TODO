@@ -119,7 +119,8 @@ function renderTodoList(filter) {
     tdContent.textContent = todo.content;
 
     const tdCategory = document.createElement("td");
-    tdCategory.textContent = todo.categoryId;
+    const category = categories.find((c) => c.id === todo.categoryId);
+    tdCategory.textContent = category.category;
 
     const tdDone = document.createElement("td");
     tdDone.textContent = todo.isDone ? "☑" : "☐";
@@ -142,6 +143,7 @@ function renderTodoList(filter) {
   });
 }
 
+// 할일 추가에서 카테고리 목록 렌더링
 function renderCategorySelect() {
   const select = document.getElementById("category-select");
 
@@ -155,3 +157,34 @@ function renderCategorySelect() {
 }
 
 renderCategorySelect();
+
+// 할일 추가 - 등록
+document.querySelector(".btn-add-confirm").addEventListener("click", (e) => {
+  const input = document.getElementById("todo-input");
+  const selctCategoryId = document.getElementById("category-select").value;
+
+  const content = input.value.trim();
+
+  if (!content) {
+    alert("할일 내용을 입력하세요");
+    input.focus();
+    return;
+  }
+
+  if (!selctCategoryId) {
+    alert("카테고리를 선택해주세요");
+    return;
+  }
+
+  todos.push({
+    id: nextId++,
+    content,
+    categoryId: selctCategoryId,
+    isDone: false,
+  });
+
+  renderCount();
+  renderCardList();
+
+  document.getElementById("add-modal").style.display = "none";
+});
