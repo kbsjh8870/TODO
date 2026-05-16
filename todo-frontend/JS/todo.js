@@ -179,7 +179,7 @@ document.querySelector(".btn-add-confirm").addEventListener("click", (e) => {
   todos.push({
     id: nextId++,
     content,
-    categoryId: selctCategoryId,
+    categoryId: Number(selctCategoryId),
     isDone: false,
   });
 
