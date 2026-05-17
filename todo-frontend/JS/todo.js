@@ -129,12 +129,53 @@ function renderTodoList(filter) {
     const editBtn = document.createElement("button");
     editBtn.textContent = "수정";
     editBtn.className = "btn-icon edit";
+
+    editBtn.addEventListener("click", (e) => {
+      if (editBtn.textContent === "저장") {
+        const newContent = tdContent.querySelector("input").value.trim();
+
+        if (!newContent) return;
+
+        todo.content = newContent;
+        editBtn.textContent = "수정";
+
+        const title = document.querySelector(".modal-title").textContent;
+        if (title === "전체 할일") renderTodoList("all");
+        else if (title === "완료") renderTodoList("done");
+        else if (title === "미완료") renderTodoList("undone");
+      }
+
+      const currentContent = tdContent.textContent;
+      tdContent.innerHTML = "";
+      const editInput = document.createElement("input");
+      editInput.value = currentContent;
+      tdContent.appendChild(editInput);
+      editInput.focus();
+      editBtn.textContent = "저장";
+
+      editInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") editBtn.click();
+      });
+    });
+
     tdEdit.appendChild(editBtn);
 
     const tdDelete = document.createElement("td");
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "삭제";
     deleteBtn.className = "btn-icon delete";
+
+    deleteBtn.addEventListener("click", (e) => {
+      todos = todos.filter((t) => t.id !== todo.id);
+      renderCount();
+      renderCardList();
+
+      const title = document.querySelector(".modal-title").textContent;
+      if (title === "전체 할일") renderTodoList("all");
+      else if (title === "완료") renderTodoList("done");
+      else if (title === "미완료") renderTodoList("undone");
+    });
+
     tdDelete.appendChild(deleteBtn);
 
     tr.append(tdId, tdContent, tdCategory, tdDone, tdEdit, tdDelete);
