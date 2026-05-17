@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.util.List;
 
 public class UserService {
-//test
     private final UserDAO userDAO = new UserDAO();
 
     // 사용자 등록
@@ -63,6 +62,16 @@ public class UserService {
     public List<UserDTO> findAllUser() {
         try (Connection conn = DBConnection.getConnection()) {
             return userDAO.findAllUser(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 로그인
+    public UserDTO login(String name, String password) {
+        try (Connection conn = DBConnection.getConnection()) {
+            return userDAO.login(conn, name, password);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
