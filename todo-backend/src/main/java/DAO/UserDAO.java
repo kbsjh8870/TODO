@@ -12,12 +12,13 @@ import java.util.List;
 public class UserDAO {
     // 사용자 등록
     public int createUser(Connection conn, UserDTO userDTO){
-        String sql = "insert into user(name) values (?)";
+        String sql = "insert into user(name, password) values (?, ?)";
         int result = 0;
 
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
 
             pstmt.setString(1,userDTO.getName());
+            pstmt.setString(2,userDTO.getPassword());
 
             result = pstmt.executeUpdate();
         }
@@ -101,5 +102,26 @@ public class UserDAO {
             e.printStackTrace();
         }
         return users;
+    }
+
+    public UserDTO login(Connection conn,String name,String password){
+        String sql = "select id, name from user where name = ? and password = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, password);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setId(rs.getInt("id"));
+                    userDTO.setName(rs.getString("name"));
+                    return userDTO;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
