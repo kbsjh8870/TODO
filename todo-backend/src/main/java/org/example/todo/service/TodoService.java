@@ -1,8 +1,8 @@
-package Service;
+package org.example.todo.service;
 
-import DAO.TodoDAO;
-import DBUtil.DBConnection;
-import DTO.TodoDTO;
+import org.example.todo.dao.TodoDAO;
+import org.example.todo.DBUtil.DBConnection;
+import org.example.todo.dto.TodoDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,7 +11,11 @@ import java.util.List;
 
 public class TodoService {
 
-    private final TodoDAO todoDAO = new TodoDAO();
+    private final TodoDAO todoDAO;
+
+    public TodoService(TodoDAO todoDAO){
+        this.todoDAO = todoDAO;
+    }
 
     // 할일 등록
     public boolean createTodo(TodoDTO todoDTO) {

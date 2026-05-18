@@ -1,4 +1,4 @@
-package DTO;
+package org.example.todo.dto;
 
 public class UserDTO {
     private int id;

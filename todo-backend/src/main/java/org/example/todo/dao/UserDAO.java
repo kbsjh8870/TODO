@@ -1,6 +1,6 @@
-package DAO;
+package org.example.todo.dao;
 
-import DTO.UserDTO;
+import org.example.todo.dto.UserDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

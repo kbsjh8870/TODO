@@ -1,14 +1,18 @@
-package Service;
+package org.example.todo.service;
 
-import DAO.UserDAO;
-import DBUtil.DBConnection;
-import DTO.UserDTO;
+import org.example.todo.dao.UserDAO;
+import org.example.todo.DBUtil.DBConnection;
+import org.example.todo.dto.UserDTO;
 
 import java.sql.Connection;
 import java.util.List;
 
 public class UserService {
-    private final UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO;
+
+    public UserService(UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
 
     // 사용자 등록
     public boolean createUser(UserDTO userDTO) {

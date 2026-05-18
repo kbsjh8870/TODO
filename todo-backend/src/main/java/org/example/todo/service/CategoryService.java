@@ -1,15 +1,19 @@
-package Service;
+package org.example.todo.service;
 
-import DAO.CategoryDAO;
-import DBUtil.DBConnection;
-import DTO.CategoryDTO;
+import org.example.todo.dao.CategoryDAO;
+import org.example.todo.DBUtil.DBConnection;
+import org.example.todo.dto.CategoryDTO;
 
 import java.sql.Connection;
 import java.util.List;
 
 public class CategoryService {
 
-    private final CategoryDAO categoryDAO = new CategoryDAO();
+    private final CategoryDAO categoryDAO;
+
+    public CategoryService(CategoryDAO categoryDAO){
+        this.categoryDAO = categoryDAO;
+    }
 
     // 카테고리 등록
     public boolean createCategory(CategoryDTO categoryDTO) {

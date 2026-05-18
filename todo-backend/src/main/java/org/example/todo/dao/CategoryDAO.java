@@ -1,6 +1,6 @@
-package DAO;
+package org.example.todo.dao;
 
-import DTO.CategoryDTO;
+import org.example.todo.dto.CategoryDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
