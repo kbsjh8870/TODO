@@ -3,10 +3,12 @@ package org.example.todo.service;
 import org.example.todo.dao.UserDAO;
 import org.example.todo.DBUtil.DBConnection;
 import org.example.todo.dto.UserDTO;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.util.List;
 
+@Service
 public class UserService {
     private final UserDAO userDAO;
 

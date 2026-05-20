@@ -124,14 +124,6 @@ function renderTodoList(filter) {
 
     const tdDone = document.createElement("td");
     tdDone.textContent = todo.isDone ? "☑" : "☐";
-    tdDone.style.cursor = "pointer";
-
-    tdDone.addEventListener("click", () => {
-      todo.isDone = !todo.isDone;
-      tdDone.textContent = todo.isDone ? "☑" : "☐";
-      renderCount();
-      renderCardList();
-    });
 
     const tdEdit = document.createElement("td");
     const editBtn = document.createElement("button");

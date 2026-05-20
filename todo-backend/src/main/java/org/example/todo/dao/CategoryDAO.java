@@ -1,6 +1,8 @@
 package org.example.todo.dao;
 
 import org.example.todo.dto.CategoryDTO;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CategoryDAO {
     // 카테고리 등록
     public int createCategory(Connection conn, CategoryDTO categoryDTO){

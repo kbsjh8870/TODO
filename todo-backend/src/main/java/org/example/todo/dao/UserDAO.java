@@ -1,6 +1,8 @@
 package org.example.todo.dao;
 
 import org.example.todo.dto.UserDTO;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class UserDAO {
     // 사용자 등록
     public int createUser(Connection conn, UserDTO userDTO){

@@ -3,12 +3,14 @@ package org.example.todo.service;
 import org.example.todo.dao.TodoDAO;
 import org.example.todo.DBUtil.DBConnection;
 import org.example.todo.dto.TodoDTO;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class TodoService {
 
     private final TodoDAO todoDAO;

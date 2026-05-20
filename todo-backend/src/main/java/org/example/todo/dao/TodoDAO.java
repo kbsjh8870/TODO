@@ -1,6 +1,8 @@
 package org.example.todo.dao;
 
 import org.example.todo.dto.TodoDTO;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class TodoDAO {
     // 할일 등록
     public int createTODO(Connection conn, TodoDTO todoDTO){

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 
 public class AppConfig {
 
-    // Controller
+   /* // Controller
     @Bean
     public UserController userController(UserService userService){
         return new UserController(userService);
@@ -59,5 +59,5 @@ public class AppConfig {
     @Bean
     public TodoService todoService(TodoDAO todoDAO) {
         return new TodoService(todoDAO);
-    }
+    }*/
 }
