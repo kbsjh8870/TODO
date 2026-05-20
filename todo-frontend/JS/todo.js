@@ -1,10 +1,21 @@
-let todos = [
-  { id: 1, content: "JAVA 복습", categoryId: 3, isDone: false },
-  { id: 2, content: "JS 복습", categoryId: 3, isDone: true },
-  { id: 3, content: "운동하기", categoryId: 2, isDone: false },
-  { id: 4, content: "미니프로젝트 코드작성", categoryId: 1, isDone: true },
-];
+// let todos = [
+//   { id: 1, content: "JAVA 복습", categoryId: 3, isDone: false },
+//   { id: 2, content: "JS 복습", categoryId: 3, isDone: true },
+//   { id: 3, content: "운동하기", categoryId: 2, isDone: false },
+//   { id: 4, content: "미니프로젝트 코드작성", categoryId: 1, isDone: true },
+// ];
+
+let todos = [];
 let nextId = todos.length + 1;
+async function loadTodos() {
+  const res = await fetch("http://localhost:8080/api/todos");
+  todos = await res.json();
+
+  renderCount();
+  renderCardList();
+}
+
+loadTodos();
 
 let categories = [
   { id: 1, category: "업무" },
@@ -120,10 +131,18 @@ function renderTodoList(filter) {
 
     const tdCategory = document.createElement("td");
     const category = categories.find((c) => c.id === todo.categoryId);
-    tdCategory.textContent = category.category;
+    tdCategory.textContent = category ? category.category : "없음"; //TODO: 카테고리 fetch
 
     const tdDone = document.createElement("td");
     tdDone.textContent = todo.isDone ? "☑" : "☐";
+    tdDone.style.cursor = "pointer";
+
+    tdDone.addEventListener("click", () => {
+      todo.isDone = !todo.isDone;
+      tdDone.textContent = todo.isDone ? "☑" : "☐";
+      renderCount();
+      renderCardList();
+    });
 
     const tdEdit = document.createElement("td");
     const editBtn = document.createElement("button");
