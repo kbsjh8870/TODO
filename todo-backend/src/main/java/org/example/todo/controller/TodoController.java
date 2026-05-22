@@ -3,13 +3,11 @@ package org.example.todo.controller;
 import org.example.todo.dto.TodoDTO;
 import org.example.todo.service.TodoService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/todos")
 public class TodoController {
     private final TodoService todoService;
@@ -18,9 +16,13 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    @ResponseBody
     @GetMapping
     public List<TodoDTO> findAllTodos(){
         return todoService.findAllTodo();
+    }
+
+    @PostMapping
+    public boolean createTodo(@RequestBody TodoDTO todoDTO){
+        return todoService.createTodo(todoDTO);
     }
 }
