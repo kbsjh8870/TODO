@@ -219,32 +219,44 @@ function renderCategorySelect() {
 renderCategorySelect();
 
 // 할일 추가 - 등록
-document.querySelector(".btn-add-confirm").addEventListener("click", (e) => {
-  const input = document.getElementById("todo-input");
-  const selctCategoryId = document.getElementById("category-select").value;
+document
+  .querySelector(".btn-add-confirm")
+  .addEventListener("click", async (e) => {
+    const input = document.getElementById("todo-input");
+    const selctCategoryId = document.getElementById("category-select").value;
 
-  const content = input.value.trim();
+    const content = input.value.trim();
 
-  if (!content) {
-    alert("할일 내용을 입력하세요");
-    input.focus();
-    return;
-  }
+    if (!content) {
+      alert("할일 내용을 입력하세요");
+      input.focus();
+      return;
+    }
 
-  if (!selctCategoryId) {
-    alert("카테고리를 선택해주세요");
-    return;
-  }
+    if (!selctCategoryId) {
+      alert("카테고리를 선택해주세요");
+      return;
+    }
 
-  todos.push({
-    id: nextId++,
-    content,
-    categoryId: Number(selctCategoryId),
-    isDone: false,
+    /* todos.push({
+      id: nextId++,
+      content,
+      categoryId: Number(selctCategoryId),
+      isDone: false,
+    }); */
+
+    await fetch("http://localhost:8080/api/todos", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: 1,
+        content,
+        category_id: Number(selctCategoryId),
+        isDone: false,
+      }),
+    });
+
+    await loadTodos();
+
+    document.getElementById("add-modal").style.display = "none";
   });
-
-  renderCount();
-  renderCardList();
-
-  document.getElementById("add-modal").style.display = "none";
-});
