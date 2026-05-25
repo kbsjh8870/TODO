@@ -7,6 +7,13 @@
 
 let todos = [];
 let nextId = todos.length + 1;
+
+async function init() {
+  loadCategories();
+  loadTodos();
+}
+init();
+
 async function loadTodos() {
   const res = await fetch("http://localhost:8080/api/todos");
   todos = await res.json();
@@ -15,15 +22,13 @@ async function loadTodos() {
   renderCardList();
 }
 
-loadTodos();
+let categories = [];
 
-let categories = [
-  { id: 1, category: "업무" },
-  { id: 2, category: "개인" },
-  { id: 3, category: "공부" },
-  { id: 4, category: "약속" },
-  { id: 5, category: "기타" },
-];
+async function loadCategories() {
+  const res = await fetch("http://localhost:8080/api/categories");
+  categories = await res.json();
+  console.log(categories);
+}
 
 // 할일 현황 카운트 렌더링
 function renderCount() {
@@ -106,6 +111,7 @@ document.querySelector(".card-undone").addEventListener("click", () => {
 
 // 할일 추가 버튼
 document.querySelector(".btn-add").addEventListener("click", () => {
+  renderCategorySelect();
   document.getElementById("add-modal").style.display = "flex";
 });
 
@@ -130,8 +136,9 @@ function renderTodoList(filter) {
     tdContent.textContent = todo.content;
 
     const tdCategory = document.createElement("td");
-    const category = categories.find((c) => c.id === todo.categoryId);
-    tdCategory.textContent = category ? category.category : "없음"; //TODO: 카테고리 fetch
+    //console.log(todo);
+    const category = categories.find((c) => c.id === todo.category_id);
+    tdCategory.textContent = category ? category.category : "없음";
 
     const tdDone = document.createElement("td");
     tdDone.textContent = todo.isDone ? "☑" : "☐";
