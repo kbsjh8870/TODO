@@ -1,13 +1,39 @@
 package org.example.todo.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.User;
+import org.example.todo.dto.UserDTO;
 import org.example.todo.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
     public UserController(UserService userService){
         this.userService = userService;
+    }
+
+    @PostMapping("/login")
+    public UserDTO login(@RequestBody UserDTO userDTO, HttpServletResponse response){
+        UserDTO user = userService.login(userDTO.getName(),userDTO.getPassword());
+
+        if(user!=null){
+            Cookie cookie = new Cookie("loginUser",String.valueOf(user.getId()));
+            cookie.setPath("/");
+            cookie.setMaxAge(60*60);
+
+            response.addCookie(cookie);
+
+            return user;
+        }
+
+        return new UserDTO();
     }
 }
