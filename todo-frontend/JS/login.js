@@ -1,5 +1,5 @@
 // 로그인 버튼
-document.querySelector(".btn-login").addEventListener("click", () => {
+document.querySelector(".btn-login").addEventListener("click", async () => {
   const name = document.getElementById("login-name").value.trim();
   const password = document.getElementById("login-password").value.trim();
 
@@ -15,8 +15,20 @@ document.querySelector(".btn-login").addEventListener("click", () => {
     return;
   }
 
-  // TODO: Spring -> fetch로 로그인 요청
-  alert("로그인 준비중");
+  // 로그인 요청
+  const res = await fetch("http://localhost:8080/api/users/login", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, password }),
+  });
+
+  const user = await res.json();
+
+  if (user && user.id) {
+    window.location.href = "index.html";
+  } else {
+    alert("이름 또는 비밀번호가 틀렸습니다.");
+  }
 });
 
 // 회원가입 버튼
