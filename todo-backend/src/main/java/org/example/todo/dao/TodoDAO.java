@@ -23,7 +23,7 @@ public class TodoDAO {
             pstmt.setInt(1,todoDTO.getUser_id());
             pstmt.setString(2,todoDTO.getContent());
             pstmt.setInt(3,todoDTO.getCategory_id());
-            pstmt.setBoolean(4,todoDTO.isDone());
+            pstmt.setBoolean(4,todoDTO.getIsDone());
 
             result = pstmt.executeUpdate();
         }

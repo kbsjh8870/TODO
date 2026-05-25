@@ -50,7 +50,7 @@ public class TodoDTO {
         this.category_id = category_id;
     }
 
-    public boolean isDone() {
+    public boolean getIsDone() {
         return isDone;
     }
 
