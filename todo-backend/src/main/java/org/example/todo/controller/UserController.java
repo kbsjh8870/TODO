@@ -6,10 +6,7 @@ import org.apache.catalina.User;
 import org.example.todo.dto.UserDTO;
 import org.example.todo.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -36,4 +33,10 @@ public class UserController {
 
         return new UserDTO();
     }
+
+    @GetMapping("/{id}")
+    public UserDTO findById(@PathVariable int id){
+        return userService.findUserById(id);
+    }
+
 }
