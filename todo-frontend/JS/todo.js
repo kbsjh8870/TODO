@@ -26,6 +26,14 @@ async function loadUserName() {
 
 loadUserName();
 
+document.getElementById("btn-logout").addEventListener("click", async (e) => {
+  await fetch("http://localhost:8080/api/users/logout", {
+    method: "get",
+    credentials: "include",
+  });
+  window.location.href = "login.html";
+});
+
 let todos = [];
 let nextId = todos.length + 1;
 
