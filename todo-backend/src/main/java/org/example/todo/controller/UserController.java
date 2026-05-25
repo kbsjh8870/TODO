@@ -1,6 +1,7 @@
 package org.example.todo.controller;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.User;
 import org.example.todo.dto.UserDTO;
@@ -37,6 +38,15 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDTO findById(@PathVariable int id){
         return userService.findUserById(id);
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpServletResponse response){
+         Cookie cookie = new Cookie("loginUser",null);
+         cookie.setPath("/");
+         cookie.setMaxAge(0);
+
+         response.addCookie(cookie);
     }
 
 }
