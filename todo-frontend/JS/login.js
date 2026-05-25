@@ -20,6 +20,7 @@ document.querySelector(".btn-login").addEventListener("click", async () => {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, password }),
+    credentials: "include",
   });
 
   const user = await res.json();

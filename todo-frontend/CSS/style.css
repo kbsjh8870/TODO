@@ -44,6 +44,12 @@ p {
     border-bottom: 3px solid #81c784;
 }
 
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 /* 컨테이너 ================================================================================================*/
 .container {
     max-width: 800px;

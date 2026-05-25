@@ -5,6 +5,27 @@
 //   { id: 4, content: "미니프로젝트 코드작성", categoryId: 1, isDone: true },
 // ];
 
+function getCookie(name) {
+  const cookies = document.cookie.split("; ");
+  console.log(cookies);
+  const cookie = cookies.find((c) => c.startsWith(name + "="));
+  console.log(cookie);
+  return cookie ? cookie.split("=")[1] : null;
+}
+
+const userId = getCookie("loginUser");
+if (!userId) {
+  window.location.href = "login.html";
+}
+
+async function loadUserName() {
+  const res = await fetch(`http://localhost:8080/api/users/${userId}`);
+  const user = await res.json();
+  document.getElementById("nav-username").textContent = user.name;
+}
+
+loadUserName();
+
 let todos = [];
 let nextId = todos.length + 1;
 
