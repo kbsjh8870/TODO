@@ -1,6 +1,9 @@
 package org.example.todo.dao;
 
+import lombok.RequiredArgsConstructor;
 import org.example.todo.dto.TodoDTO;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -13,155 +16,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class TodoDAO {
+
+    private final JdbcTemplate jdbcTemplate;
+
+    private final RowMapper<TodoDTO> todoRowMapper = (rs, rowNum) -> {
+        TodoDTO dto = new TodoDTO();
+        dto.setId(rs.getInt("id"));
+        dto.setUser_id(rs.getInt("user_id"));
+        dto.setContent(rs.getString("content"));
+        dto.setUpload_date(rs.getObject("upload_date", LocalDate.class));
+        dto.setCategory_id(rs.getInt("category_id"));
+        dto.setDone(rs.getBoolean("isdone"));
+        return dto;
+    };
+
     // 할일 등록
-    public int createTODO(Connection conn, TodoDTO todoDTO){
+    public int createTODO(TodoDTO todoDTO){
         String sql = "insert into todo(user_id,content,category_id,isdone) values(?,?,?,?)";
-        int result = 0;
-
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1,todoDTO.getUser_id());
-            pstmt.setString(2,todoDTO.getContent());
-            pstmt.setInt(3,todoDTO.getCategory_id());
-            pstmt.setBoolean(4,todoDTO.getIsDone());
-
-            result = pstmt.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-        return result;
+        return jdbcTemplate.update(sql, todoDTO.getUser_id(), todoDTO.getContent(), todoDTO.getCategory_id(), todoDTO.getIsDone());
     }
 
-    public int modifyTODO(Connection conn, TodoDTO todoDTO){
+    public int modifyTODO(TodoDTO todoDTO) {
         String sql = "update todo set content = ?, category_id = ? where id = ?";
-        int result =0;
-
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setString(1, todoDTO.getContent());
-            pstmt.setInt(2,todoDTO.getCategory_id());
-            pstmt.setInt(3, todoDTO.getId());
-
-            result = pstmt.executeUpdate();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return result;
+        return jdbcTemplate.update(sql, todoDTO.getContent(), todoDTO.getCategory_id(), todoDTO.getId());
     }
 
-    public int deleteTODO(Connection conn, int id){
+    public int deleteTODO(int id) {
         String sql = "delete from todo where id = ?";
-        int result =0;
-
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1,id);
-
-            result = pstmt.executeUpdate();
-        }
-        catch (SQLException  e){
-            e.printStackTrace();
-        }
-
-        return result;
+        return jdbcTemplate.update(sql, id);
     }
 
-    public List<TodoDTO> findAllTodo(Connection conn){
+    public List<TodoDTO> findAllTodo() {
         String sql = "select id,user_id,content,upload_date,category_id,isdone from todo";
-        List<TodoDTO> todos = new ArrayList<>();
-
-        try(PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()){
-
-            while(rs.next()){
-                TodoDTO todoDTO = new TodoDTO();
-
-                todoDTO.setId(rs.getInt("id"));
-                todoDTO.setUser_id(rs.getInt("user_id"));
-                todoDTO.setContent(rs.getString("content"));
-                todoDTO.setUpload_date(rs.getObject("upload_date", LocalDate.class));
-                todoDTO.setCategory_id(rs.getInt("category_id"));
-                todoDTO.setDone(rs.getBoolean("isdone"));
-
-                todos.add(todoDTO);
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return todos;
+        return jdbcTemplate.query(sql, todoRowMapper);
     }
 
-    public TodoDTO findById(Connection conn, int id){
+    public TodoDTO findById(int id) {
         String sql = "select id,user_id,content,upload_date,category_id,isdone from todo where id = ?";
-
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1,id);
-
-            try(ResultSet rs = pstmt.executeQuery()){
-                if(rs.next()){
-                    TodoDTO todoDTO = new TodoDTO();
-
-                    todoDTO.setId(rs.getInt("id"));
-                    todoDTO.setUser_id(rs.getInt("user_id"));
-                    todoDTO.setContent(rs.getString("content"));
-                    todoDTO.setUpload_date(rs.getObject("upload_date", LocalDate.class));
-                    todoDTO.setCategory_id(rs.getInt("category_id"));
-                    todoDTO.setDone(rs.getBoolean("isdone"));
-
-                    return todoDTO;
-                }
-            }
+        try {
+            return jdbcTemplate.queryForObject(sql, todoRowMapper, id);
+        } catch (Exception e) {
+            return null;
         }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
-    public  List<TodoDTO>  findByDate(Connection conn,LocalDate date){
+    public List<TodoDTO> findByDate(LocalDate date) {
         String sql = "select id,user_id,content,upload_date,category_id,isdone from todo where upload_date = ?";
-        List<TodoDTO> todos= new ArrayList<>();
-
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setObject(1,date);
-
-            try(ResultSet rs = pstmt.executeQuery()){
-                while(rs.next()){
-                    TodoDTO todoDTO = new TodoDTO();
-
-                    todoDTO.setId(rs.getInt("id"));
-                    todoDTO.setUser_id(rs.getInt("user_id"));
-                    todoDTO.setContent(rs.getString("content"));
-                    todoDTO.setUpload_date(rs.getObject("upload_date", LocalDate.class));
-                    todoDTO.setCategory_id(rs.getInt("category_id"));
-                    todoDTO.setDone(rs.getBoolean("isdone"));
-
-                    todos.add(todoDTO);
-                }
-            }
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return todos;
+        return jdbcTemplate.query(sql, todoRowMapper, date);
     }
 
-    public int toggleDone(Connection conn, int id, boolean isDone) {
+    public int toggleDone(int id, boolean isDone) {
         String sql = "update todo set isdone = ? where id = ?";
-        int result = 0;
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setBoolean(1, isDone);
-            pstmt.setInt(2, id);
-            result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
+        return jdbcTemplate.update(sql, isDone, id);
     }
 }

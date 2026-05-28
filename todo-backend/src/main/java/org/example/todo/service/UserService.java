@@ -1,7 +1,6 @@
 package org.example.todo.service;
 
 import org.example.todo.dao.UserDAO;
-import org.example.todo.DBUtil.DBConnection;
 import org.example.todo.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
@@ -22,65 +21,31 @@ public class UserService {
         if (userDTO.getName() == null || userDTO.getName().trim().isEmpty()) {
             return false;
         }
-
-        try (Connection conn = DBConnection.getConnection()) {
-            int result = userDAO.createUser(conn, userDTO);
-            return result > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return userDAO.createUser(userDTO)>0;
     }
 
     // 사용자 수정
     public boolean modifyUser(UserDTO userDTO) {
-        try (Connection conn = DBConnection.getConnection()) {
-            int result = userDAO.modifyUser(conn, userDTO);
-            return result > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return userDAO.modifyUser(userDTO)>0;
     }
 
     // 사용자 삭제
     public boolean deleteUser(int id) {
-        try (Connection conn = DBConnection.getConnection()) {
-            int result = userDAO.deleteUser(conn, id);
-            return result > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+       return userDAO.deleteUser(id)>0;
     }
 
     // id로 단건 조회
     public UserDTO findUserById(int id) {
-        try (Connection conn = DBConnection.getConnection()) {
-            return userDAO.findById(conn, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return userDAO.findById(id);
     }
 
     // 전체 조회
     public List<UserDTO> findAllUser() {
-        try (Connection conn = DBConnection.getConnection()) {
-            return userDAO.findAllUser(conn);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return userDAO.findAllUser();
     }
 
     // 로그인
     public UserDTO login(String name, String password) {
-        try (Connection conn = DBConnection.getConnection()) {
-            return userDAO.login(conn, name, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return userDAO.login(name,password);
     }
 }

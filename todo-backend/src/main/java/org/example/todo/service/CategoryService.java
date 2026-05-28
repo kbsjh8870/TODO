@@ -1,7 +1,6 @@
 package org.example.todo.service;
 
 import org.example.todo.dao.CategoryDAO;
-import org.example.todo.DBUtil.DBConnection;
 import org.example.todo.dto.CategoryDTO;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +22,7 @@ public class CategoryService {
         if (categoryDTO.getCategory() == null || categoryDTO.getCategory().trim().isEmpty()) {
             return false;
         }
-
-        try (Connection conn = DBConnection.getConnection()) {
-            int result = categoryDAO.createCategory(conn, categoryDTO);
-            return result > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return categoryDAO.createCategory(categoryDTO)>0;
     }
 
     // 카테고리 삭제 (이름으로)
@@ -38,43 +30,21 @@ public class CategoryService {
 
         if(categoryName == null || categoryName.trim().isEmpty())
             return false;
-
-        try (Connection conn = DBConnection.getConnection()) {
-            int result = categoryDAO.deleteCategory(conn, categoryName);
-            return result > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return categoryDAO.deleteCategory(categoryName)>0;
     }
 
     // id로 단건 조회
     public CategoryDTO findCategoryById(int id) {
-        try (Connection conn = DBConnection.getConnection()) {
-            return categoryDAO.findById(conn, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return categoryDAO.findById(id);
     }
 
     // 전체 조회
     public List<CategoryDTO> findAllCategory() {
-        try (Connection conn = DBConnection.getConnection()) {
-            return categoryDAO.findAllCategory(conn);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return categoryDAO.findAllCategory();
     }
 
     public CategoryDTO findCategoryByName(String name) {
-        try (Connection conn = DBConnection.getConnection()) {
-            return categoryDAO.findByName(conn, name);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return categoryDAO.findByName(name);
     }
     
 }
