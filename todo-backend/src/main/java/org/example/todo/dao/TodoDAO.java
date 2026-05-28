@@ -35,7 +35,7 @@ public class TodoDAO {
     // 할일 등록
     public int createTODO(TodoDTO todoDTO){
         String sql = "insert into todo(user_id,content,category_id,isdone) values(?,?,?,?)";
-        return jdbcTemplate.update(sql, todoDTO.getUser_id(), todoDTO.getContent(), todoDTO.getCategory_id(), todoDTO.getIsDone());
+        return jdbcTemplate.update(sql, todoDTO.getUser_id(), todoDTO.getContent(), todoDTO.getCategory_id(), todoDTO.isDone());
     }
 
     public int modifyTODO(TodoDTO todoDTO) {

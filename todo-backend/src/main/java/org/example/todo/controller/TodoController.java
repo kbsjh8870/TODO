@@ -25,4 +25,20 @@ public class TodoController {
     public boolean createTodo(@RequestBody TodoDTO todoDTO){
         return todoService.createTodo(todoDTO);
     }
+
+    @PostMapping("/modify")
+    public boolean modifyTodo(@RequestBody TodoDTO todoDTO){
+        return todoService.modifyTodo(todoDTO);
+    }
+
+    @GetMapping("/delete/{id}")
+    public boolean deleteTodo(@PathVariable int id){
+        return todoService.deleteTodo(id);
+    }
+
+    @GetMapping("/done/{id}")
+    public boolean doneToggle(@PathVariable int id,@RequestParam boolean isDone){
+        return todoService.toggleTodoDone(id,isDone);
+    }
+
 }

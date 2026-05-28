@@ -4,7 +4,6 @@ import org.example.todo.dao.CategoryDAO;
 import org.example.todo.dto.CategoryDTO;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
 import java.util.List;
 
 @Service
