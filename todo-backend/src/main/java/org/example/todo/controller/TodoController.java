@@ -1,6 +1,7 @@
 package org.example.todo.controller;
 
-import org.example.todo.dto.TodoDTO;
+import lombok.RequiredArgsConstructor;
+import org.example.todo.domain.Todo;
 import org.example.todo.service.TodoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,36 +10,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/todos")
+@RequiredArgsConstructor
 public class TodoController {
+
     private final TodoService todoService;
 
-    public TodoController(TodoService todoService){
-        this.todoService = todoService;
-    }
-
     @GetMapping
-    public List<TodoDTO> findAllTodos(){
+    public List<Todo> findAllTodos(){
         return todoService.findAllTodo();
     }
 
     @PostMapping
-    public boolean createTodo(@RequestBody TodoDTO todoDTO){
-        return todoService.createTodo(todoDTO);
+    public Todo createTodo(@RequestBody Todo todo){
+        return todoService.createTodo(todo);
     }
 
     @PostMapping("/modify")
-    public boolean modifyTodo(@RequestBody TodoDTO todoDTO){
-        return todoService.modifyTodo(todoDTO);
+    public Todo modifyTodo(@RequestBody Todo todo){
+        return todoService.modifyTodo(todo);
     }
 
     @GetMapping("/delete/{id}")
-    public boolean deleteTodo(@PathVariable int id){
-        return todoService.deleteTodo(id);
+    public void deleteTodo(@PathVariable int id){
+        todoService.deleteTodo(id);
     }
 
     @GetMapping("/done/{id}")
-    public boolean doneToggle(@PathVariable int id,@RequestParam boolean isDone){
-        return todoService.toggleTodoDone(id,isDone);
+    public Todo doneToggle(@PathVariable int id, @RequestParam boolean isDone){
+        return todoService.toggleTodoDone(id, isDone);
     }
 
 }

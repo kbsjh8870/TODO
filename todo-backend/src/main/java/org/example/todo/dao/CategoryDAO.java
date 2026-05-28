@@ -2,7 +2,6 @@ package org.example.todo.dao;
 
 import lombok.RequiredArgsConstructor;
 import org.example.todo.dto.CategoryDTO;
-import org.example.todo.dto.TodoDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
