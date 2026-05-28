@@ -1,51 +1,51 @@
 package org.example.todo.service;
 
-import org.example.todo.dao.UserDAO;
-import org.example.todo.dto.UserDTO;
+import lombok.RequiredArgsConstructor;
+import org.example.todo.domain.User;
+import org.example.todo.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
-import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    private final UserDAO userDAO;
 
-    public UserService(UserDAO userDAO){
-        this.userDAO = userDAO;
-    }
+    private final UserRepository userRepository;
 
     // 사용자 등록
-    public boolean createUser(UserDTO userDTO) {
+    public User createUser(User user) {
 
-        if (userDTO.getName() == null || userDTO.getName().trim().isEmpty()) {
-            return false;
+        if (user.getName() == null || user.getName().trim().isEmpty()) {
+            return null;
         }
-        return userDAO.createUser(userDTO)>0;
+        return userRepository.save(user);
     }
 
     // 사용자 수정
-    public boolean modifyUser(UserDTO userDTO) {
-        return userDAO.modifyUser(userDTO)>0;
+    public User modifyUser(User user) {
+        return userRepository.save(user);
     }
 
     // 사용자 삭제
-    public boolean deleteUser(int id) {
-       return userDAO.deleteUser(id)>0;
+    public void deleteUser(int id) {
+       userRepository.deleteById(id);
     }
 
     // id로 단건 조회
-    public UserDTO findUserById(int id) {
-        return userDAO.findById(id);
+    public User findUserById(int id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     // 전체 조회
-    public List<UserDTO> findAllUser() {
-        return userDAO.findAllUser();
+    public List<User> findAllUser() {
+        List<User> list = new ArrayList<>();
+        userRepository.findAll().forEach(list::add);
+        return list;
     }
 
     // 로그인
-    public UserDTO login(String name, String password) {
-        return userDAO.login(name,password);
+    public User login(String name, String password) {
+        return userRepository.findByNameAndPassword(name,password).orElse(null);
     }
 }

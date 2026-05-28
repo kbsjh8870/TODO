@@ -1,3 +1,4 @@
+/*
 package org.example.todo.dao;
 
 import lombok.RequiredArgsConstructor;
@@ -60,3 +61,4 @@ public class CategoryDAO {
         return jdbcTemplate.queryForObject(sql,categoryRowMapper,name);
     }
 }
+*/

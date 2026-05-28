@@ -1,49 +1,47 @@
 package org.example.todo.service;
 
-import org.example.todo.dao.CategoryDAO;
-import org.example.todo.dto.CategoryDTO;
+import lombok.RequiredArgsConstructor;
+import org.example.todo.domain.Category;
+import org.example.todo.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
 
-    private final CategoryDAO categoryDAO;
-
-    public CategoryService(CategoryDAO categoryDAO){
-        this.categoryDAO = categoryDAO;
-    }
+    private final CategoryRepository categoryRepository;
 
     // 카테고리 등록
-    public boolean createCategory(CategoryDTO categoryDTO) {
+    public Category createCategory(Category category) {
 
-        if (categoryDTO.getCategory() == null || categoryDTO.getCategory().trim().isEmpty()) {
-            return false;
+        if (category.getCategory() == null || category.getCategory().trim().isEmpty()) {
+            return null;
         }
-        return categoryDAO.createCategory(categoryDTO)>0;
+        return categoryRepository.save(category);
     }
 
     // 카테고리 삭제 (이름으로)
-    public boolean deleteCategory(String categoryName) {
-
-        if(categoryName == null || categoryName.trim().isEmpty())
-            return false;
-        return categoryDAO.deleteCategory(categoryName)>0;
+    public void deleteCategory(String categoryName) {
+        categoryRepository.deleteByCategory(categoryName);
     }
 
     // id로 단건 조회
-    public CategoryDTO findCategoryById(int id) {
-        return categoryDAO.findById(id);
+    public Category findCategoryById(int id) {
+        return categoryRepository.findById(id).orElse(null);
     }
 
     // 전체 조회
-    public List<CategoryDTO> findAllCategory() {
-        return categoryDAO.findAllCategory();
+    public List<Category> findAllCategory() {
+        List<Category> list = new ArrayList<>();
+        categoryRepository.findAll().forEach(list::add);
+        return list;
     }
 
-    public CategoryDTO findCategoryByName(String name) {
-        return categoryDAO.findByName(name);
+    public Category findCategoryByName(String name) {
+        return categoryRepository.findByCategory(name).orElse(null);
     }
     
 }

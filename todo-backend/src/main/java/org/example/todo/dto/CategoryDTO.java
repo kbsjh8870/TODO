@@ -1,3 +1,4 @@
+/*
 package org.example.todo.dto;
 
 import lombok.AllArgsConstructor;
@@ -13,3 +14,4 @@ public class CategoryDTO {
     private int id;
     private String category;
 }
+*/
