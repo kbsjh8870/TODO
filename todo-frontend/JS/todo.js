@@ -207,6 +207,7 @@ function renderTodoList(filter) {
           credentials: "include",
           body: JSON.stringify({
             id: todo.id,
+            user_id: todo.user_id,
             content: newContent,
             category_id: todo.category_id,
           }),
