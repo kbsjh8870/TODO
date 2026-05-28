@@ -62,7 +62,7 @@ async function loadCategories() {
 // 할일 현황 카운트 렌더링
 function renderCount() {
   const all = todos.length;
-  const done = todos.filter((t) => t.isDone).length;
+  const done = todos.filter((t) => t.done).length;
   const undone = all - done;
 
   document.querySelectorAll(".count")[0].textContent = all;
@@ -76,11 +76,11 @@ renderCount();
 function renderCardList() {
   const allRecent = [...todos].reverse().slice(0, 3);
   const doneRecent = [...todos]
-    .filter((l) => l.isDone)
+    .filter((l) => l.done)
     .reverse()
     .slice(0, 3);
   const undoneRecent = [...todos]
-    .filter((l) => !l.isDone)
+    .filter((l) => !l.done)
     .reverse()
     .slice(0, 3);
 
@@ -149,8 +149,8 @@ function renderTodoList(filter) {
   let filtered;
 
   if (filter === "all") filtered = todos;
-  else if (filter === "done") filtered = todos.filter((t) => t.isDone);
-  else if (filter === "undone") filtered = todos.filter((t) => !t.isDone);
+  else if (filter === "done") filtered = todos.filter((t) => t.done);
+  else if (filter === "undone") filtered = todos.filter((t) => !t.done);
 
   const tbody = document.getElementById("todo-tbody");
   tbody.innerHTML = "";
@@ -170,14 +170,25 @@ function renderTodoList(filter) {
     tdCategory.textContent = category ? category.category : "없음";
 
     const tdDone = document.createElement("td");
-    tdDone.textContent = todo.isDone ? "☑" : "☐";
+    tdDone.textContent = todo.done ? "☑" : "☐";
     tdDone.style.cursor = "pointer";
+    tdDone.addEventListener("click", async () => {
+      console.log(todo.done);
+      await fetch(
+        `http://localhost:8080/api/todos/done/${todo.id}?isDone=${!todo.done}`,
+        {
+          credentials: "include",
+        },
+      );
 
-    tdDone.addEventListener("click", () => {
-      todo.isDone = !todo.isDone;
-      tdDone.textContent = todo.isDone ? "☑" : "☐";
+      await loadTodos();
       renderCount();
       renderCardList();
+
+      const title = document.querySelector(".modal-title").textContent;
+      if (title === "전체 할일") renderTodoList("all");
+      else if (title === "완료") renderTodoList("done");
+      else if (title === "미완료") renderTodoList("undone");
     });
 
     const tdEdit = document.createElement("td");
@@ -185,19 +196,31 @@ function renderTodoList(filter) {
     editBtn.textContent = "수정";
     editBtn.className = "btn-icon edit";
 
-    editBtn.addEventListener("click", (e) => {
+    editBtn.addEventListener("click", async (e) => {
       if (editBtn.textContent === "저장") {
         const newContent = tdContent.querySelector("input").value.trim();
-
         if (!newContent) return;
 
-        todo.content = newContent;
-        editBtn.textContent = "수정";
+        await fetch("http://localhost:8080/api/todos/modify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            id: todo.id,
+            content: newContent,
+            category_id: todo.category_id,
+          }),
+        });
+
+        await loadTodos();
+        renderCount();
+        renderCardList();
 
         const title = document.querySelector(".modal-title").textContent;
         if (title === "전체 할일") renderTodoList("all");
         else if (title === "완료") renderTodoList("done");
         else if (title === "미완료") renderTodoList("undone");
+        return;
       }
 
       const currentContent = tdContent.textContent;
@@ -220,8 +243,12 @@ function renderTodoList(filter) {
     deleteBtn.textContent = "삭제";
     deleteBtn.className = "btn-icon delete";
 
-    deleteBtn.addEventListener("click", (e) => {
-      todos = todos.filter((t) => t.id !== todo.id);
+    deleteBtn.addEventListener("click", async (e) => {
+      await fetch(`http://localhost:8080/api/todos/delete/${todo.id}`, {
+        credentials: "include",
+      });
+
+      await loadTodos();
       renderCount();
       renderCardList();
 
@@ -288,7 +315,7 @@ document
         user_id: 1,
         content,
         category_id: Number(selctCategoryId),
-        isDone: false,
+        done: false,
       }),
     });
 

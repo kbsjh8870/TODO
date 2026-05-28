@@ -13,12 +13,6 @@ function renderUsers() {
   users.forEach((user) => {
     const tr = document.createElement("tr");
 
-    /* tr.innerHTML = `
-    <td>${user.id}</td>
-    <td>${user.name}</td>
-    <td><button class="btn-icon edit">수정</button></td>
-    <td><button class="btn-icon delete">삭제</button></td>`; */
-
     const tdId = document.createElement("td");
     tdId.textContent = user.id;
 
